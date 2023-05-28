@@ -1,4 +1,5 @@
-package video;
+package com.example.demo.video;
+
 
 public class Video {
     
