@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 public class VideoController {
@@ -20,5 +24,45 @@ public class VideoController {
     @RequestMapping("/videos")
     public List<Video> getVideoList(){
         return videolist;
+    }
+
+    @RequestMapping("/videos/{title}")
+    public Video getVideo(@PathVariable String title){
+        for (Video v:videolist){
+            if(v.getTitle().equals(title))
+            return v;
+        }
+        return null;
+    }
+    
+    @RequestMapping(method=RequestMethod.POST, value="/videos")
+    public void addVideo(@RequestBody Video video){
+        videolist.add(video);
+    }
+
+    @RequestMapping(method=RequestMethod.PUT, value="/videos/{title}")
+    public void updateVideo(@PathVariable String title, @RequestBody Video video){
+        for(int i=0; i<videolist.size(); i++){
+            Video v = videolist.get(i);
+            if(v.getTitle().equals(title)){
+                videolist.set(i,video);
+                return;
+            }
+        }
+    }
+
+
+
+   
+
+    @RequestMapping(method=RequestMethod.DELETE, value="/videos/{title}")
+    public void deleteVideo(@PathVariable String title){
+        for(int i=0; i<videolist.size(); i++){
+            Video v = videolist.get(i);
+            if(v.getTitle().equals(title)){
+                videolist.remove(i);
+                return;
+            }
+        }
     }
 }
