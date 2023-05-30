@@ -1,8 +1,13 @@
 package com.example.demo.video;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+
+@Entity
 public class Video {
-    
+
+    @Id
     private String title;
     private String agerating;
     private String description;
